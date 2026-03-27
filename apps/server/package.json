@@ -1,6 +1,6 @@
 {
   "name": "@polka/server",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "description": "Polka Express server",
   "main": "index.js",
