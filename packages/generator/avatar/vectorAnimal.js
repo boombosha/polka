@@ -33,7 +33,7 @@ function generateAvatarVectorAnimal({
   fg,
   seed,
 }) {
-  const s = parseSize(size, 32, 1024, 128);
+  const s = parseSize(size, 32, 1024, 48);
   const p = pickPalette(palette);
   const st = pickStyle(style);
   const bgHex = normalizeHex(bg, p.bg);

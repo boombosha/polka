@@ -11,7 +11,7 @@ function generateAvatarInitials({
   family,
   palette,
 }) {
-  const s = parseSize(size, 32, 1024, 128);
+  const s = parseSize(size, 32, 1024, 48);
   const p = pickPalette(palette);
   const initials = String(text || '?').trim().toUpperCase().slice(0, 3) || '?';
 

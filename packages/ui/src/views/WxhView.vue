@@ -1,6 +1,7 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 
+const baseOrigin = typeof window !== 'undefined' ? window.location.origin.replace(/\/$/, '') : '';
 const width = ref(400);
 const height = ref(300);
 const usePathText = ref(false);
@@ -61,11 +62,18 @@ const builtPath = computed(() => {
   return qs ? `${p}?${qs}` : p;
 });
 
+const fullUrl = computed(() => (baseOrigin ? `${baseOrigin}${builtPath.value}` : builtPath.value));
+const editableUrl = ref(fullUrl.value);
+
+watchEffect(() => {
+  editableUrl.value = fullUrl.value;
+});
+
 const copyState = ref('');
 
 async function copyUrl() {
   try {
-    await navigator.clipboard.writeText(builtPath.value);
+    await navigator.clipboard.writeText(editableUrl.value);
     copyState.value = 'Скопировано';
     setTimeout(() => {
       copyState.value = '';
@@ -76,7 +84,7 @@ async function copyUrl() {
 }
 
 function openInNewTab() {
-  window.open(builtPath.value, '_blank', 'noopener,noreferrer');
+  window.open(editableUrl.value, '_blank', 'noopener,noreferrer');
 }
 </script>
 
@@ -158,7 +166,7 @@ function openInNewTab() {
         <div class="url-row">
           <label class="field field--grow">
             <span class="field__label">Итоговый URL</span>
-            <input :value="builtPath" type="text" readonly class="field__input field__input--mono" />
+            <input v-model="editableUrl" type="text" readonly class="field__input field__input--mono" />
           </label>
           <div class="icon-actions">
             <button
@@ -192,7 +200,7 @@ function openInNewTab() {
         <div class="preview">
           <span class="field__label">Превью</span>
           <div class="preview__box">
-            <img :src="builtPath" alt="Превью плейсхолдера" class="preview__img" />
+            <img :src="editableUrl" alt="Превью плейсхолдера" class="preview__img" />
           </div>
         </div>
       </aside>
@@ -217,7 +225,7 @@ function openInNewTab() {
 
 @media (min-width: 768px) {
   .wxh-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(280px, 400px);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 
   .wxh-aside {
@@ -308,25 +316,10 @@ function openInNewTab() {
 
 .wxh-aside .url-row {
   display: flex;
-  flex-direction: column;
   gap: 0.6rem;
-  align-items: stretch;
+  align-items: flex-end;
+  flex-wrap: wrap;
   margin-bottom: 1rem;
-}
-
-.wxh-aside .url-row .btn {
-  width: 100%;
-}
-
-@media (min-width: 480px) {
-  .wxh-aside .url-row {
-    flex-direction: row;
-    align-items: flex-end;
-  }
-
-  .wxh-aside .url-row .btn {
-    width: auto;
-  }
 }
 
 .btn {
@@ -369,6 +362,7 @@ function openInNewTab() {
 .icon-actions {
   display: inline-flex;
   gap: 0.4rem;
+  flex-shrink: 0;
 }
 
 .wxh-aside .preview {

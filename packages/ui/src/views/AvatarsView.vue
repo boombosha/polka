@@ -1,9 +1,10 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 
+const baseOrigin = typeof window !== 'undefined' ? window.location.origin.replace(/\/$/, '') : '';
 const mode = ref('initials');
 
-const size = ref(128);
+const size = ref(48);
 const palette = ref('soft');
 const bg = ref('');
 const fg = ref('');
@@ -76,10 +77,17 @@ const builtPath = computed(() => {
   return `/avatars/vector/${vectorKind.value}?${q.toString()}`;
 });
 
+const fullUrl = computed(() => (baseOrigin ? `${baseOrigin}${builtPath.value}` : builtPath.value));
+const editableUrl = ref(fullUrl.value);
+
+watchEffect(() => {
+  editableUrl.value = fullUrl.value;
+});
+
 const copyState = ref('');
 async function copyUrl() {
   try {
-    await navigator.clipboard.writeText(builtPath.value);
+    await navigator.clipboard.writeText(editableUrl.value);
     copyState.value = 'Скопировано';
     setTimeout(() => {
       copyState.value = '';
@@ -90,7 +98,7 @@ async function copyUrl() {
 }
 
 function openInNewTab() {
-  window.open(builtPath.value, '_blank', 'noopener,noreferrer');
+  window.open(editableUrl.value, '_blank', 'noopener,noreferrer');
 }
 </script>
 
@@ -179,7 +187,7 @@ function openInNewTab() {
         <div class="url-row">
           <label class="field field--grow">
             <span class="field__label">Итоговый URL</span>
-            <input :value="builtPath" readonly class="field__input field__input--mono" />
+            <input v-model="editableUrl" readonly class="field__input field__input--mono" />
           </label>
           <div class="icon-actions">
             <button
@@ -212,7 +220,7 @@ function openInNewTab() {
         <div class="preview">
           <span class="field__label">Превью</span>
           <div class="preview__box">
-            <img :src="builtPath" alt="Превью аватара" class="preview__img" />
+            <img :src="editableUrl" alt="Превью аватара" class="preview__img" />
           </div>
         </div>
       </aside>
@@ -244,7 +252,7 @@ function openInNewTab() {
 }
 @media (min-width: 768px) {
   .layout {
-    grid-template-columns: minmax(0, 1fr) minmax(280px, 400px);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: start;
   }
 }
