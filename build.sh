@@ -7,12 +7,14 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-TAG="${TAG:-latest}"
-IMAGE="${IMAGE:-polka}"
+TAG=0.0.1
+IMAGE=antirek/polka
 
 docker build \
   -f "${ROOT_DIR}/Dockerfile" \
   -t "${IMAGE}:${TAG}" \
   "${ROOT_DIR}"
+
+docker push "${IMAGE}:${TAG}"
 
 echo "Built ${IMAGE}:${TAG}"

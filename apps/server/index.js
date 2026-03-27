@@ -5,8 +5,8 @@ const express = require('express');
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const { initialize } = require('express-openapi');
-const { generatePlaceholder } = require('polka-generator');
-const { config, repoRoot } = require('polka-config');
+const { generatePlaceholder } = require('@polka/generator');
+const { config, repoRoot } = require('@polka/config');
 
 const rootPkg = require(path.join(repoRoot, 'package.json'));
 

@@ -1,5 +1,5 @@
 {
-  "name": "polka-config",
+  "name": "@polka/config",
   "version": "1.0.0",
   "private": true,
   "description": "Shared env-backed config for Polka (dotenv)",

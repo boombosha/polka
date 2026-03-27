@@ -1,7 +1,7 @@
 'use strict';
 
 const path = require('path');
-const { repoRoot } = require('polka-config');
+const { repoRoot } = require('@polka/config');
 const rootPkg = require(path.join(repoRoot, 'package.json'));
 
 module.exports = {

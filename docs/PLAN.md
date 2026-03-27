@@ -27,7 +27,7 @@
 
 - Общие переменные окружения читаются через пакет **`packages/config`**: загрузка **dotenv** из **`.env` в корне репозитория** (путь к корню вычисляется из расположения пакета), плюс при необходимости стандартный `dotenv.config()` для локальных переопределений из текущего каталога.
 - Пример ключей: `PORT`, `PUBLIC_ORIGIN`, **`PLACEHOLDER_MAX_WIDTH`**, **`PLACEHOLDER_MAX_HEIGHT`**. См. **`.env.example`** в корне.
-- Сервер и (при необходимости) генератор импортируют `const { config } = require('polka-config')` или workspace-алиас после объявления зависимости в `apps/server`.
+- Сервер и (при необходимости) генератор импортируют `const { config } = require('@polka/config')` или workspace-алиас после объявления зависимости в `apps/server`.
 
 ### Лимиты и безопасность
 
@@ -53,10 +53,10 @@
 ### A1. Monorepo (npm workspaces)
 
 - Корневой `package.json`: `private`, `workspaces`: `apps/*`, `packages/*`.
-- **`packages/generator`** — чистая логика SVG (лимиты W/H принимать аргументами или импортировать из `polka-config`, без циклических зависимостей: предпочтительно передавать `maxWidth`/`maxHeight` из сервера).
-- **`packages/config`** — dotenv + экспорт `config` (уже заведён черновик).
-- **`packages/ui`** — Vue 3 + Vite, сборка в каталог, который читает сервер.
-- **`apps/server`** — Express, каталог **`routes`** под `express-openapi`, статика UI, Swagger UI, healthcheck, SPA fallback.
+- **`packages/generator`** (`@polka/generator`) — чистая логика SVG (лимиты W/H принимать аргументами или импортировать из `@polka/config`, без циклических зависимостей: предпочтительно передавать `maxWidth`/`maxHeight` из сервера).
+- **`packages/config`** (`@polka/config`) — dotenv + экспорт `config` (уже заведён черновик).
+- **`packages/ui`** (`@polka/ui`) — Vue 3 + Vite, сборка в каталог, который читает сервер.
+- **`apps/server`** (`@polka/server`) — Express, каталог **`routes`** под `express-openapi`, статика UI, Swagger UI, healthcheck, SPA fallback.
 
 ### A2. Один сервер хостит API и UI
 

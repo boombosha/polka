@@ -1,5 +1,5 @@
 {
-  "name": "polka-ui",
+  "name": "@polka/ui",
   "private": true,
   "version": "0.0.0",
   "type": "module",

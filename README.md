@@ -6,7 +6,7 @@ HTTP-сервис с **placeholder-контентом**: SVG-картинки з
 
 ## Быстрый старт (локально)
 
-Монорепозиторий (**npm workspaces**): `npm install`, затем `npm run build` (сборка UI в `apps/server/public`), `npm start` (только сервер, точка входа `apps/server/index.js`). Разработка UI: `npm run dev -w polka-ui` (прокси на сервер для `/wxh`, `/docs`, …) и в другом терминале `npm start`.
+Монорепозиторий (**npm workspaces**): `npm install`, затем `npm run build` (сборка UI в `apps/server/public`), `npm start` (только сервер, точка входа `apps/server/index.js`). Разработка UI: `npm run dev -w @polka/ui` (прокси на сервер для `/wxh`, `/docs`, …) и в другом терминале `npm start`.
 
 Порт по умолчанию: `4700` (см. `packages/config`, `.env.example`).
 
