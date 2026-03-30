@@ -14,6 +14,12 @@ HTTP-сервис с **placeholder-контентом**: SVG-картинки з
 
 Подробный план: [docs/PLAN.md](docs/PLAN.md).
 
+## Скриншоты
+
+![](images/1.png)
+
+![](images/2.png)
+
 ## API
 
 | Метод | Путь | Назначение |
