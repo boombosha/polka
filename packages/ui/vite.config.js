@@ -13,7 +13,12 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      '/wxh': 'http://localhost:4700',
+      // Proxy only API routes, not SPA pages (/wxh, /avatars, /stock).
+      // Otherwise direct navigation to /wxh would be proxied to the backend
+      // and the browser would try to load built /assets/* from the dev origin.
+      '^/wxh/\\d': 'http://localhost:4700',
+      '^/avatars/(initials|vector)/': 'http://localhost:4700',
+      '^/stock/\\d': 'http://localhost:4700',
       '/docs': 'http://localhost:4700',
       '/openapi.json': 'http://localhost:4700',
       '/health': 'http://localhost:4700',

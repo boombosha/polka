@@ -23,10 +23,33 @@ async function main() {
     res.json({ status: 'ok', service: 'polka', version: rootPkg.version });
   });
 
+  if (process.platform === 'win32') {
+    // Win32 workaround: express-openapi can derive URLs with backslashes from filesystem
+    // paths (e.g. /wxh\{width}\{height}). For local Windows dev, mount the API
+    // routes explicitly as plain Express handlers.
+    const wxhPlain = require('./routes/wxh/{width}/{height}');
+    const wxhText = require('./routes/wxh/{width}/{height}/{text}');
+    const avatarInitials = require('./routes/avatars/initials/{text}');
+    const avatarVector = require('./routes/avatars/vector/{kind}');
+    const stockRoute = require('./routes/stock/{width}/{height}/{query}');
+
+    app.get('/wxh/:width/:height', wxhPlain(generatePlaceholder, config).GET);
+    app.get('/wxh/:width/:height/:text', wxhText(generatePlaceholder, config).GET);
+    app.get('/avatars/initials/:text', avatarInitials(generateAvatarInitials).GET);
+    app.get('/avatars/vector/:kind', avatarVector(generateAvatarVector).GET);
+    app.get(
+      '/stock/:width/:height/:query',
+      stockRoute(config, generatePlaceholder, stockCache, stockResize, stockFreepik, stockFallback).GET,
+    );
+  }
+
   const framework = await initialize({
     app,
     apiDoc: path.join(__dirname, 'api-doc.js'),
-    paths: path.join(__dirname, 'routes'),
+    paths:
+      process.platform === 'win32'
+        ? path.join(__dirname, 'routes').replace(/\\/g, '/')
+        : path.join(__dirname, 'routes'),
     dependencies: {
       generatePlaceholder,
       generateAvatarInitials,
