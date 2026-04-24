@@ -15,7 +15,7 @@ const initialsText = ref('AB');
 const family = ref('arial');
 const font = ref('');
 
-const vectorKind = ref('male');
+const vectorKind = ref('man');
 const style = ref('flat');
 const shape = ref('round');
 
@@ -53,7 +53,7 @@ const paletteOptions = [
   { value: 'ocean', label: 'Ocean' },
 ];
 const vectorKinds = [
-  { value: 'male', label: 'Мужской' },
+  { value: 'man', label: 'Мужской' },
   { value: 'female', label: 'Женский' },
   { value: 'neutral', label: 'Нейтральный' },
   { value: 'cat', label: 'Cat' },
@@ -61,6 +61,7 @@ const vectorKinds = [
   { value: 'panda', label: 'Panda' },
   { value: 'fox', label: 'Fox' },
 ];
+
 
 const builtPath = computed(() => {
   const q = new URLSearchParams();

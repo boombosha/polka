@@ -4,6 +4,7 @@
  */
 
 const { generateAvatarInitials } = require('./avatar/initials');
+const { generateAvatarVectorMan } = require('./avatar/vectorMan');
 const { generateAvatarVectorHuman } = require('./avatar/vectorHuman');
 const { generateAvatarVectorAnimal } = require('./avatar/vectorAnimal');
 const {
@@ -128,6 +129,9 @@ function generateAvatar({ initials, bg, fg, size, fontSize, family, palette }) {
 }
 
 function generateAvatarVector({ kind, size, palette, style, bg, fg, seed }) {
+  if (String(kind) === 'man') {
+    return generateAvatarVectorMan({ size, bg, seed });
+  }
   if (AVATAR_HUMAN_KIND_KEYS.includes(String(kind))) {
     return generateAvatarVectorHuman({ kind, size, palette, style, bg, fg, seed });
   }
@@ -188,6 +192,7 @@ module.exports = {
   generateAvatar,
   generateAvatarInitials,
   generateAvatarVector,
+  generateAvatarVectorMan,
   generateAvatarVectorHuman,
   generateAvatarVectorAnimal,
   generatePattern,

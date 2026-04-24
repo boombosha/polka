@@ -30,7 +30,7 @@ HTTP-сервис с **placeholder-контентом**: SVG-картинки з
 | GET | `/wxh/:width/:height` | SVG плейсхолдер; query: `bg`, `fg`, `text`, `rounded`, `font` (размер, px), `family` (гарнитура, 15 пресетов), `gradient` |
 | GET | `/wxh/:width/:height/:text` | То же, подпись в path (URL-encoding); те же query |
 | GET | `/avatars/initials/:text` | SVG-аватар по инициалам; query: `size`, `palette`, `family`, `font`, `bg`, `fg`, `seed` |
-| GET | `/avatars/vector/:kind` | SVG-векторный аватар; `kind`: `male|female|neutral|cat|dog|panda|fox`; query: `size`, `palette`, `style`, `bg`, `fg`, `seed` |
+| GET | `/avatars/vector/:kind` | SVG-векторный аватар; `kind`: `man|male|female|neutral|cat|dog|panda|fox`; query: `size`, `palette`, `style`, `bg`, `fg`, `seed`, `blush` (`auto|on|off`, для `man`) |
 
 Паттерны (`generatePattern`) в генераторе (`packages/generator/generator.js`) пока **не** выведены на отдельный HTTP-префикс.
 

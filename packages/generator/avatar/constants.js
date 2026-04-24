@@ -1,6 +1,7 @@
 'use strict';
 
 const AVATAR_KIND_KEYS = Object.freeze([
+  'man',
   'male',
   'female',
   'neutral',
